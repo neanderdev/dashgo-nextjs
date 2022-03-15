@@ -1,9 +1,10 @@
+import { GetServerSideProps } from 'next';
 import NextLink from 'next/link';
 import { useState } from 'react';
 import { Box, Button, Checkbox, Flex, Heading, Icon, Link, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from '@chakra-ui/react';
 import { RiAddLine, RiEditLine } from 'react-icons/ri';
 
-import { useUsers } from '../../services/hooks/useUsers';
+import { getUsers, useUsers } from '../../services/hooks/useUsers';
 import { queryCliente } from '../../services/queryClient';
 import { api } from '../../services/api';
 
@@ -14,6 +15,12 @@ import { Sidebar } from '../../components/Sidebar';
 export default function UserList() {
     const [page, setPage] = useState(1);
     const { data, isLoading, isFetching, error } = useUsers(page);
+
+    // const { data, isLoading, isFetching, error } = useUsers(page, {
+    //   initialData: {
+    //     users,
+    //   },
+    // });
 
     const isWideVersion = useBreakpointValue({
         base: false,
@@ -136,3 +143,13 @@ export default function UserList() {
         </Box >
     );
 }
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//     const { users } = await getUsers(1);
+
+//     return {
+//         props: {
+//             users,
+//         },
+//     };
+// };
